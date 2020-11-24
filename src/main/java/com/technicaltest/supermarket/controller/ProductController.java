@@ -9,7 +9,6 @@ import com.technicaltest.supermarket.entity.Product;
 import com.technicaltest.supermarket.service.ProductService;
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 
 import org.springframework.web.bind.annotation.*;
@@ -35,12 +34,12 @@ public class ProductController {
     }
 
     @PostMapping("/addProduct")
-    public void addProduct(@RequestBody Product product) {
+    public void addProduct(@RequestBody Product product) throws Exception {
         service.saveProduct(product);
     }
 
     @PutMapping("/updateProducts/{id}")
-    public ResponseEntity<?> update(@RequestBody Product product, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@RequestBody Product product, @PathVariable Integer id) throws Exception {
         try {
             Product existProduct = service.getProdutsbyId(id);
             

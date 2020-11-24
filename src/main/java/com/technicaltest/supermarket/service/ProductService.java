@@ -1,6 +1,6 @@
 package com.technicaltest.supermarket.service;
 
-import com.technicaltest.supermarket.repository.ProductRepository;
+import com.technicaltest.supermarket.mapper.ProductMapperImpl;
 import com.technicaltest.supermarket.entity.Product;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,22 +11,19 @@ import org.springframework.stereotype.Service;
 public class ProductService {
     
     @Autowired
-    private ProductRepository repository;
+    private ProductMapperImpl repository;
      
     public List<Product> getProduts() {
-        return repository.findAll();
+        return repository.getProducts();
     }
      
-    public Product saveProduct(Product product) {
-        return repository.save(product);
+    public Integer saveProduct(Product product) throws Exception {
+        return repository.insertProduct(product);
     }
     
-    public List<Product> saveProducts(List<Product> products) {
-        return repository.saveAll(products);
-    }
-     
-    public Product getProdutsbyId(Integer id) {
-        return repository.findById(id).get(); 
+      
+    public Product getProdutsbyId(Integer IdProducto) {
+        return repository.findByIdProducto(IdProducto); 
     }
     
       
@@ -36,14 +33,14 @@ public class ProductService {
         return "Producto eliminado !!" +id;
     }
     
-    public Product updateProduct(Product product){
+    public Integer updateProduct(Product product) throws Exception{
         
-        Product existingProduct = repository.findById(product.getIdProducto()).orElse(null);
+        Product existingProduct = repository.findByIdProducto(product.getIdProducto());
         existingProduct.setCodigo(product.getCodigo());
         existingProduct.setNombre(product.getNombre());
         existingProduct.setValorUnidad(product.getValorUnidad());
         existingProduct.setStock(product.getStock());
-        return repository.save(existingProduct);
+        return repository.updateProduct(existingProduct);
         
         
         
